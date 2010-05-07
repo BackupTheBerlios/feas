@@ -1,0 +1,19 @@
+body {
+   font-size: 100%;
+}
+
+/* CSS zur Gestaltung der Tabelle */
+table {
+   font-size: 100%;
+}
+
+/* Tabellenzellen gestalten */
+th {
+   font-size: 100%;
+}
+thead {
+   background-color: #4f82bd;
+   color: white;
+   font-weight: bold;
+}
+

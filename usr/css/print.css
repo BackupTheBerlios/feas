@@ -1,0 +1,20 @@
+body {
+   font-size: 75%;
+}
+
+/* CSS zur Gestaltung der Tabelle */
+table {
+   font-size: 75%;
+}
+
+/* Tabellenzellen gestalten */
+th {
+   font-size: 125%;
+}
+thead {
+   background-color: #4f82bd;
+   color: white;
+   font-weight: bold;
+   display:table-header-group;
+}
+

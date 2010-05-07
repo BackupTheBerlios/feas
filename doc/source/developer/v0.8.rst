@@ -1,0 +1,76 @@
+.. _v0.8:
+
+====
+v0.8
+====
+.. topic:: v0.8
+
+   Hier werden die geplanten Features der v0.8 behandelt.
+   
+
+Ziel dieser Version ist eine vollständige Integration des aus älteren Versionen von FEAS gewonnenen Frameworks. Darüber hinaus werden zahlreiche neue Features eingeführt, welche allerdings bereits in vorherigen Versionen gewünscht wurden.
+
+
+Features
+========
+ * Das Gebührenmodul müsste funktionieren! 
+ 
+ * Die Anmeldemaske sollte bereits die DFS-Anmeldung beinhalten. Dies erfordert eine eigenständige Anmeldemaske für FEAS.
+ 
+ * Durch einbinden des Datenbank-Frameworks kann FEAS nun mit fast jeder beliebigen SQL-Datenbank betrieben werden - nicht mehr nur mit PostgreSQL!
+ 
+ 
+ 
+ 
+Überlegungen
+------------
+ * Luftfahrzeugkennzeichen sollten dekodiert werden können
+ 
+ * Flugzeuge sollten auch Vereine als Halter haben können
+ 
+ * Die DFS-Anmeldung sollte mit Freifeldern funktionieren, wenn möglich!
+ 
+ 
+Ad acta...
+----------
+ * Die Datenbank muss ein ``global`` werden. Der Zugriff auf die dortigen Tabellen erfolgt aus fast jedem Modul, deshalb ist dieser Schritt zuerst zu gehen.
+    * Kann sie nicht, weil ``globals`` in Python nur innerhalb eines Modules auch global sind! Modulübergreifende globals gibt's nicht (Stichwort `name-pollution`)
+ 
+ * Die Datenbank-Konfiguration von FEAS kann nun auch im laufenden Betrieb geändert werden. 
+    * Ziemlich sinnlos, FEAS kann auch neu gestartet werden, wenn die DBconfig zu ändern ist!
+ 
+ 
+
+Bugs
+====
+Hier stehen die aktuellen Fehler von FEAS, bis sie beseitigt sind.
+
+ * Der MySQL-Treiber bringt Fehler, daß Tabelle angeblich schon existiert wenn man diese über den Treiber einbindet (ist eher ein ``BaseUI``-Problem.
+
+    
+Lösungsansätze
+--------------
+ * Wenn eine Person neu angelegt wird, erscheinen bereits vorhandene Adressen und Kommunikationen, obwohl für diese Person noch gar nix angelegt ist (Es erscheinen manchmal die Adressen aller anderen Personen ?!).
+    * Erscheint bei der Anlage von neuen Personen, nachdem eine bereits vorhandene Person aufgerufen wurde. Ein vorangehender Aufruf einer ``clean()`` Funktion beseitigt das.
+      
+ * Um die überhand nehmenden Probleme mit der Datenbankanmeldung aus der Welt zu schaffen wurde das Framework weitgehend überarbeitet. Die Klasse :class:`Database` im Modul :mod:`Dialogs` hat nun Zugriff auf die Datenbank und eine .ini-Konfigurationsdatei - dieses Modul wird ja ohnehin immer nur dann verwendet, wenn eine Datenbankverbindung aufgebaut werden soll (und die dafür notwendigen Verbindungsdaten sind in einer .ini-Datei sehr gut aufgehoben). Damit geht zwar ein Stück modularität verloren, man erhält aber dafür eine gut durchdachte Klasse zum verbinden von Datenbanken! Nachteil: Die Datenbank kann nun nur noch über das Modul :mod:`SQLdb` verbunden werden - was aber ohnehin immer der Fall sein wird.
+ 
+ * Alle Änderungen an der Datenbankanmeldung selbst werden nun ausschließlich in der Klasse :class:`Database` des Moduls :mod:`Dialogs` gemacht. So profitieren alle Applikationen mit Datenbankanmeldung davon. Nachteil: Alte Applikationen müssen umgeschrieben werden, jedoch hält sich der Aufwand in erträglichen Grenzen (Der Quellcode in den Hauptapplikationen wird weniger).
+    * Alte oder bestehende Applikationen greifen nun auf einen Versions-Tag zu (z.B. 0.1 für die erste Version des Frameworks).
+    * Noch ältere Versionen müssen halt umgeschrieben werden.
+
+ * Die neue Datenbankanmeldung ist ein Portlet, das ohne Problem in jeden ``gtk.Container`` eingepflanzt werden kann. So ist es möglich, die Anmeldemaske überall anzuzeigen. Es ist darüber Hinaus nicht unbedingt erforderlich, dass überhaupt eine Maske angezeigt werden muß. Es ist auch möglich, eine Datenbankanmeldung aus einer einfachen .ini-Datei heraus anzustoßen. Ebenso kann nun die Klasse :class:`Database` im Modul :mod:`SQLdb` die Datenbank-Konfiguration wieder zurückgeben für den Fall, dass die aktuelle Konfiguration z.B. in einem Optionen-Dialog wiedergegeben werden muß.
+ 
+ 
+beseitigt
+---------
+ * Die Datenbankanmeldung funktioniert nicht richtig:
+    * Überflüssige alte Datenbankanmeldung entfernen - Schritt für Schritt.
+    
+ * Probleme beim erstellen & einlesen der ``settings.ini``, wenn die nicht vorhanden ist!
+ 
+ * In Erwägung ziehen, eine Master-Klasse für Optionen zu kreieren oder zumindest mehr funktionalität in das Framework packen (GTKapi.Dialogs.Database)! Auf jeden Fall muss die Modularität wiederhergestellt werden, damit fremde Klassen auf die Klasse ``window_options`` zugreifen können, ohne sich dabei gekruxe zu holen.
+    * Problem 1: Die Fehlerdialoge haben kein ``parent``, sofern die methode ``window_options.initGUI`` nicht aufgerufen wird...
+    * Problem 2: Das Einlesen der ``settings.ini`` sollte überhaupt genauso unabhängig funktionieren, wie das Erstellen einer neuen - Falls diese Datei noch nicht vorhanden ist. Das Befüllen der Felder ist natürlich zu unterlassen, wenn ``load_settings`` oder ``save_settings`` von außen aufgerufen werden! In diesen beiden Methoden darf also unter keinen Umständen ein Zugriff auf die Formularfelder der Datenbank-Konfiguration zugegriffen werden!
+
+

@@ -1,0 +1,58 @@
+body {
+   /* different in screen.css and print.css */
+   width: 90%;
+   font-family: sans-serif;
+   line-height: 1.25;
+   background-color: #fff;
+   color: black;
+   margin: 10px auto;
+}
+h2 {
+   font-size:125%;
+   color: black;
+   text-align: center;
+   border-top: 2px solid black;
+   border-bottom: 2px solid black;
+}
+
+/* CSS zur Gestaltung der Tabelle */
+table {
+   /* different in screen.css and print.css */
+   width: 100%;
+   background: white;
+   color: black;
+   border: 1px solid;
+}
+
+/* Tabellenzellen gestalten */
+th, td {
+   text-align: left;
+   vertical-align: top;
+}
+th {
+   /* different in screen.css and print.css */
+   font-weight: bold;
+}
+thead {
+   background-color: #4f82bd;
+   color: white;
+   font-weight: bold;
+}
+
+/* Zebrastreifen und Hovern */
+tr.zebrastreifen_gerade { 
+   background-color: #b8cce4; 
+   color: black;
+}
+tr.zebrastreifen_gerade:hover { 
+   background-color: #d90000; 
+   color: white; 
+}
+tr.zebrastreifen_ungerade { 
+   background-color: #dbe5f1; 
+   color: black;
+}
+tr.zebrastreifen_ungerade:hover { 
+   background-color: #d90000;
+   color: white;
+}

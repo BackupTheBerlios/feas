@@ -1,0 +1,6 @@
+# -*- coding: cp1252 -*-
+# Diese Datei initialisiert die Programmodule. Die __all__ Liste muﬂ
+# alle Module beinhalten, die auﬂerhalb dieses Verzeichnisses aufgerufen
+# werden (siehe Python tutorial (section packages)).
+
+__all__ = ['main']
