@@ -1,2 +1,5 @@
 glob:*.pyc
 glob:build/
+glob:*.ini
+glob:.pydevproject
+glob:.project
