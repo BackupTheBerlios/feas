@@ -20,5 +20,5 @@ USER_DIR = 'usr/'
 
 ENCODING = 'cp1252'
 HTML_THEME = 'feasdoc'
-DEBUG = False
+DEBUG = True
 LOCALIZED = False

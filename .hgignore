@@ -3,3 +3,4 @@ glob:build/
 glob:*.ini
 glob:.pydevproject
 glob:.project
+glob:usr/*.db

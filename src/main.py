@@ -71,7 +71,7 @@ class window_start:
         self.window_start.show_all()
         
         # Connects the database.
-        self.database_dialog = Portlets.DatabaseLogin(ini_filename=USER_DIR + "settings.ini", parent=self.window_start)
+        self.database_dialog = Portlets.DatabaseLogin(ini_filename=USER_DIR + "settings.ini", parent=self.window_start, debug=DEBUG)
         self.database_portlet = self.database_dialog.portlet
         self.database_dialog.set_connect_function(self.on_connect)
         self.database_dialog.set_disconnect_function(self.on_disconnect)
