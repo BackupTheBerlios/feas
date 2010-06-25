@@ -2,7 +2,7 @@
 # -*- coding: iso-8859-1 -*-
 
 #===============================================================================
-# CxFreeze setup V0.53, productive with PySVN support in alpha stage.
+# CxFreeze setup V0.54, added makeRessources.
 #
 # Features:
 # - NSIS support (Windows installer)
@@ -74,6 +74,7 @@ makeAbout(tpl_path='res/about_tpl.svg',
 # Copy needed GTK and resource files to build dir -----------------------------
 if sys.platform == "win32" and sys.argv[1] == "build":
     makeGTK(gtk_dir, pathname, build_dir, LOCALIZED)
+    makeRessources(pathname, build_dir)
     makeSphinx(pathname, build_dir)
     makeNSI(pathname, build_dir, APP_NAME, APP_VERSION, APP_ICON)
     
